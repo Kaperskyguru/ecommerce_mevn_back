@@ -2,10 +2,10 @@ const database = require("../database/Database.js");
 
 class Category {
 
-    static all() {
+    static all(limit = 0) {
         return new Promise((resolve, reject) => {
-            let sql = "SELECT * FROM category";
-            database.execute(sql, (err, rows) => {
+            let sql = "SELECT * FROM category LIMIT ?";
+            database.execute(sql, [limit], (err, rows) => {
                 if (err) {
                     reject(new Error(err));
                 } else {

@@ -17,9 +17,9 @@ class Products {
     static async show(req, res) {
         try {
             const product = await Product.find(req.params.id);
-            res.send([{
-                product: product
-            }]);
+            res.json(
+                product
+            );
         } catch (error) {
             console.log(error);
         }
@@ -32,6 +32,15 @@ class Products {
             res.send([{
                 'message': message
             }])
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static async productsByCategory(req, res) {
+        try {
+            const products = await Product.getProductsByCategory(req.params.id);
+            res.json(products);
         } catch (error) {
             console.log(error);
         }
