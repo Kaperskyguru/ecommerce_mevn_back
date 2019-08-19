@@ -5,7 +5,7 @@ class Products {
 
     static async index(req, res) {
         try {
-            const products = await Product.all(5)
+            const products = await Product.all(200)
             res.json(
                 products
             );
@@ -40,6 +40,24 @@ class Products {
     static async productsByCategory(req, res) {
         try {
             const products = await Product.getProductsByCategory(req.params.id);
+            res.json(products);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static async totalProductsInCategory(req, res) {
+        try {
+            const total = await Product.totalProductsInCategory();
+            res.json(total);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    static async getProductCategories(req, res) {
+        try {
+            const products = await Product.getProductCategories()
             res.json(products);
         } catch (error) {
             console.log(error);

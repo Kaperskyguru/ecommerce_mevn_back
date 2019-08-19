@@ -6,7 +6,7 @@ class Categories {
 
     static async index(req, res) {
         try {
-            const categories = await Category.all(5);
+            const categories = await Category.all();
 
             res.json(
                 categories

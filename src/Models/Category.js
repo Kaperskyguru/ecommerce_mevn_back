@@ -4,7 +4,12 @@ class Category {
 
     static all(limit = 0) {
         return new Promise((resolve, reject) => {
-            let sql = "SELECT * FROM category LIMIT ?";
+            let sql;
+            if (limit == 0) {
+                sql = "SELECT * FROM category";
+            } else {
+                sql = "SELECT * FROM category LIMIT ?";
+            }
             database.execute(sql, [limit], (err, rows) => {
                 if (err) {
                     reject(new Error(err));

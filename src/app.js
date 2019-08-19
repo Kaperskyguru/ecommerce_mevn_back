@@ -41,6 +41,8 @@ app.use('/api/*', passport.authenticate('jwt', {
 app.get("/api/products", Products.index);
 app.get("/api/products/:id", Products.show);
 app.get("/api/products/category/:id", Products.productsByCategory);
+app.get("/api/products/total", Products.totalProductsInCategory);
+app.get("/api/productcategories", Products.getProductCategories);
 
 app.get("/api/categories", Categories.index);
 app.get("/api/categories/:id", Categories.show);
