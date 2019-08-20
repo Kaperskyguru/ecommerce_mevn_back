@@ -12,6 +12,7 @@ const Products = require("./Controllers/Products.js");
 const Categories = require("./Controllers/Categories.js");
 const Clients = require("./Controllers/Clients.js");
 const Orders = require("./Controllers/Orders.js");
+const Attributes = require("./Controllers/Attributes.js");
 
 // Models
 
@@ -47,6 +48,9 @@ app.get("/api/productcategories", Products.getProductCategories);
 app.get("/api/categories", Categories.index);
 app.get("/api/categories/:id", Categories.show);
 app.get("/api/orders", Orders.index);
+
+app.get("/api/attributes", Attributes.index);
+app.get("/api/attributes/:id", Attributes.find);
 
 app.post('/register', Clients.register)
 app.post('/login', Clients.login);
