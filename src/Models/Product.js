@@ -8,7 +8,7 @@ class Product {
   static all(limit = 0) {
     return new Promise(function (resolve, reject) {
       // 
-      let sql = "SELECT pc.product_id, c.name AS category, p.* FROM product_category AS pc INNER JOIN product AS p ON pc.product_id = p.product_id JOIN category AS c ON c.category_id = pc.category_id LIMIT ?";
+      let sql = "SELECT pc.product_id, c.name AS category, pc.category_id, p.* FROM product_category AS pc INNER JOIN product AS p ON pc.product_id = p.product_id JOIN category AS c ON c.category_id = pc.category_id LIMIT ?";
       database.execute(sql, [limit], (err, rows) => {
         if (err) reject(new Error(err));
         else resolve(rows);
@@ -25,7 +25,7 @@ class Product {
   static find(id) {
     let values = [id];
     return new Promise((resolve, reject) => {
-      let sql = "SELECT pc.product_id, c.name AS category, p.* FROM product_category AS pc INNER JOIN product AS p ON pc.product_id = p.product_id JOIN category AS c ON c.category_id = pc.category_id WHERE p.product_id = ?";
+      let sql = "SELECT pc.product_id, c.name AS category, pc.category_id, p.* FROM product_category AS pc INNER JOIN product AS p ON pc.product_id = p.product_id JOIN category AS c ON c.category_id = pc.category_id WHERE p.product_id = ?";
       database.execute(sql, values, (err, row) => {
         if (err) {
           reject(new Error(err))
