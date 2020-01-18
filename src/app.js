@@ -11,6 +11,7 @@ const path = require('path');
 const Products = require("./Controllers/Products.js");
 const Categories = require("./Controllers/Categories.js");
 const Clients = require("./Controllers/Clients.js");
+const Customers = require("./Controllers/Customers.js");
 const Orders = require("./Controllers/Orders.js");
 const Attributes = require("./Controllers/Attributes.js");
 const Reviews = require("./Controllers/Reviews.js");
@@ -43,7 +44,13 @@ app.get("/api/attributes/:id", Attributes.find);
 app.get("/api/categories", Categories.index);
 app.get("/api/categories/:id", Categories.show);
 
+app.get("/api/customers", Customers.index);
+app.get("/api/customers/:id", Customers.show);
+app.post("/api/customers", Customers.create);
+
 app.get("/api/orders", Orders.index);
+app.post("/api/orders", Orders.create);
+app.post("/api/orders/items", Orders.createOrderItem);
 
 app.get("/api/products", Products.index);
 app.get("/api/products/:id", Products.show);

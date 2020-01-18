@@ -43,10 +43,20 @@ class Orders {
 
     static async create(req, res) {
         try {
-            const message = await Order.create(req.body);
-            res.send([{
-                message
-            }]);
+            const message = await Order.add(req.body);
+            res.json(
+                message,
+            );
+        } catch (error) {
+            ExceptionHandler.handle(res, new OrderExceptions(error));
+        }
+
+    }
+
+    static async createOrderItem(req, res, message) {
+        try {
+            const res = await Order.createItem(req.body.items, message);
+            return res;
         } catch (error) {
             ExceptionHandler.handle(res, new OrderExceptions(error));
         }

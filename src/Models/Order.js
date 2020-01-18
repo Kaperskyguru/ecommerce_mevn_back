@@ -44,6 +44,7 @@ class Order {
         });
     }
 
+
     static add(order) {
         return new Promise((resolve, reject) => {
             let sql = "INSERT orders (total_amount, shipped_on, status, comments, customer_id, auth_code, reference, shipping_id, tax_id) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -51,6 +52,8 @@ class Order {
                 if (err) {
                     reject(new Error(err));
                 } else {
+                    order.items.order_id = rows.insertId;
+                    Order_Items.createItem(order.items)
                     resolve(rows);
                 }
             });
@@ -59,7 +62,7 @@ class Order {
 
     static delete(id) {
         return new Promise((resolve, reject) => {
-            let sql = "DELETE FROM orders WHERE order_id = ?)";
+            let sql = "DELETE FROM orders WHERE order_id = ?";
             database.execute(sql, id, (err, rows) => {
                 if (err) {
                     reject(new Error(err));
@@ -67,6 +70,38 @@ class Order {
                     resolve(rows);
                 }
             });
+        });
+    }
+}
+
+class Order_Items {
+
+    static createItem(order) {
+        const values = [];
+
+        order.forEach((product) => {
+            let arr = [];
+            arr.push(order.order_id);
+            arr.push(product.product_id);
+            arr.push(product.attributes || "Electronics");
+            arr.push(product.name);
+            arr.push(product.quantity | 1);
+            arr.push(product.price);
+            values.push(arr);
+        });
+
+        return new Promise((resolve, reject) => {
+            let sql = "INSERT order_detail (order_id, product_id, attributes, product_name, quantity, unit_cost) VALUES ?";
+            //LOOP HERE OR STORE MULTIPLE ITEMS
+            database.query(sql, [values], (err, rows, fields) => {
+                if (err) {
+                    // console.log(this.sql);
+                    reject(new Error(err));
+                } else {
+                    resolve(rows);
+                }
+            });
+            // console.log(query.sql);
         });
     }
 
